@@ -61,6 +61,7 @@ export const upload = async (req: Request, res: Response) => {
               latitude: pointData.latitude,
               longitude: pointData.longitude,
               measurements: measurementIds,
+              organizationPoint: orgPoint._id,
             });
 
             pointIds.push(point._id);
