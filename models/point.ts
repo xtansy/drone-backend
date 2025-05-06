@@ -6,7 +6,7 @@ import { type MeasurementPointModel } from "./measurement-point";
 export interface PointModel {
   latitude: number;
   longitude: number;
-  measurements: MeasurementPointModel;
+  measurements: MeasurementPointModel[];
 }
 
 export type PointModelDocument = PointModel & Document;
