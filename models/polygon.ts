@@ -16,12 +16,10 @@ export const Polygon = model<PolygonModelDocument>(
   "Polygon",
   new Schema<PolygonModel>(
     {
-      coordinates: [
-        {
-          required: true,
-          type: [[Number]],
-        },
-      ],
+      coordinates: {
+        required: true,
+        type: [[Number]],
+      },
       points: [
         {
           required: true,
