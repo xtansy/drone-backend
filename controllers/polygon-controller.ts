@@ -14,12 +14,17 @@ export const getAllPolygons = async (_: Request, res: Response) => {
     const polygons = await Polygon.find()
       .populate({
         path: "points",
-        populate: {
-          path: "measurements",
-          populate: {
-            path: "measurementDevice",
+        populate: [
+          {
+            path: "measurements",
+            populate: {
+              path: "measurementDevice",
+            },
           },
-        },
+          {
+            path: "organizationPoint",
+          },
+        ],
       })
       .populate("organizationPoint")
       .exec();
