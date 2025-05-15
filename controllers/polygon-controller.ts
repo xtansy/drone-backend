@@ -41,6 +41,44 @@ export const getAllPolygons = async (_: Request, res: Response) => {
   }
 };
 
+export const getPolygonById = async (req: Request, res: Response) => {
+  try {
+    const { polygonId } = req.params;
+
+    const polygon = await Polygon.findById(polygonId)
+      .populate({
+        path: "points",
+        populate: [
+          {
+            path: "measurements",
+            populate: {
+              path: "measurementDevice",
+            },
+          },
+          {
+            path: "organizationPoint",
+          },
+        ],
+      })
+      .populate("organizationPoint")
+      .exec();
+
+    if (!polygon) {
+      return res.status(404).json({ errorMessage: "Полигон не найден" });
+    }
+
+    res.json({
+      message: "Полигон успешно получен!",
+      data: polygon,
+    });
+  } catch (error) {
+    res.status(500).json({
+      errorMessage: "Ошибка при получении полигона",
+      error: error instanceof Error ? error.message : "Неизвестная ошибка",
+    });
+  }
+};
+
 export const deleteAllPolygons = async (_: Request, res: Response) => {
   const session = await mongoose.startSession();
   session.startTransaction();
